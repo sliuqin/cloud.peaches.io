@@ -1,0 +1,15 @@
+p { foo
+:
+  'bar' }
+
+   em{foo:bar;bar:baz}
+   i
+   {
+     foo
+     :
+     bar
+     ;
+     bar
+     :
+     baz
+     }
