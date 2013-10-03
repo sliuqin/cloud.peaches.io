@@ -1,0 +1,65 @@
+{% extends 'layout/default.html' %}
+{% block content %}
+<div class="i-cloud">
+    <div class="introduction">
+        <div class="content">
+            <h1 class="ui dividing header">
+                在云端
+            </h1>
+
+            <p>Everybody needs a copilot.</p>
+
+            <a class="ui basic labeled icon toggle overview button"
+               href="https://github.com/sliuqin/cloud.peaches.io/wiki" target="_blank">
+                Wiki
+                <i class="book icon"></i>
+            </a>
+        </div>
+    </div>
+    <div class="try">
+        <div class="content">
+            <div class="action">
+                <form action="{{action}}" method="get">
+                    <select name="file">
+                        {% for f in files%}
+                        <option value="{{f}}" {% if f == file %} selected="selected" {% endif %}>{{f}}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="ui mini labeled icon button secondary" type="submit">
+                        <i class="cloud download icon"></i>
+                        加载
+                    </button>
+                </form>
+                
+            </div>
+            <div class="ui two column grid">
+                <div class="column">
+                    <div id="J-ace-editor" class="editor">{{content}}</div>
+                </div>
+                <div class="column">
+                    <div id="J-ace-viewer" class="editor"></div>
+                </div>
+            </div>
+            <div>
+                <input type="button" class="fluid positive ui button" value="提交"/>
+            </div>
+        </div>
+    </div>
+</div>
+{% block script%}
+<script src="{{settings.STATIC_CDN_URL}}static/js/ace/9.11.2013/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = ace.edit("J-ace-editor");
+    editor.setTheme("ace/theme/github");
+
+    editor.getSession().setMode("ace/mode/css");
+    editor.getSession().setUseWorker(false);
+
+    var viewer = ace.edit("J-ace-viewer");
+    viewer.setTheme("ace/theme/github");
+    viewer.setReadOnly(true);
+    viewer.getSession().setMode("ace/mode/css");
+    viewer.getSession().setUseWorker(false);
+</script>
+{% endblock %}
+{% endblock %}

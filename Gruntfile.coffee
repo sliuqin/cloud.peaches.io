@@ -1,6 +1,22 @@
 module.exports = (grunt) ->
   grunt.initConfig {
     pkg: grunt.file.readJSON 'package.json'
+    peaches:
+      sprite:
+        options:
+          "beautify": true,
+          "model": "alipay",
+          "retina": true,
+          "format": "png8",
+          "sort": "h"
+          files: [
+            {
+              expand: true,
+              cwd: '.build/dist',
+              src: '**/*.css',
+              dest: '.build/dist'
+            }
+          ]
     uglify:
       options:
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'

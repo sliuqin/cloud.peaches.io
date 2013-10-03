@@ -1,19 +1,26 @@
 path = require 'path'
 
 _ = require 'underscore'
-APP_THEME = 'default'
+
+DOMAIN = 'peaches.net'
 
 settings =
   PROJ_ROOT: path.join __dirname, ''
   ROOT_DIR: path.join __dirname, ''
   APP_ROOT: path.join __dirname, 'apps'
   STATIC_ROOT: path.join __dirname, 'static'
-  port: 8084
-  views: path.join __dirname, 'template', APP_THEME
+  STATIC_URL: 'http://static.peaches.net/'
+  STATIC_CDN_URL:'http://sliuqin.github.io/assets/'
+  port: 8085
+  views: path.join __dirname, 'template'
   INSTALLED_APPS: ['default']
+  DOMAIN: DOMAIN
+  ROOT_URL: "http://#{DOMAIN}/"
+  ASSETS_URL: "http://assets.#{DOMAIN}/"
+  OAUTH_URL: "http://oauth.#{DOMAIN}/",
+  CLOUD_URL: "http://cloud.#{DOMAIN}/"
 
 settings.uploadDir = path.join(settings.STATIC_ROOT, 'upload')
 
 for key ,val of settings
   exports[key] = val
-

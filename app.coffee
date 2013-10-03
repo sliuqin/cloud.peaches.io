@@ -23,8 +23,10 @@ class Manage extends EventEmitter
     @settings = require('./settings')
     @server = express()
 
-    @server.configure 'all', ->
-      this.engine 'html', cons.swig
+    @server.configure 'all', =>
+      @server.set key, val for key ,val of @settings
+
+      @server.engine 'html', cons.swig
       swig.init({
         allowErrors: false
         autoescape: true
@@ -35,18 +37,21 @@ class Manage extends EventEmitter
         extensions: {}
         tzOffset: 0
       });
-      this.set 'view engine', 'html'
-      this.set 'view options', {
+      @server.set 'view engine', 'html'
+      @server.set 'view options', {
         layout: false
       }
-      this.set key, val for key ,val of @settings
 
-      this.use express.bodyParser({
+
+      @server.use express.bodyParser({
         keepExtensions: true,
         uploadDir: @settings.uploadDir
       })
 
-      this.use express.methodOverride()
+      @server.use '/static', express.static(__dirname + '/static')
+      @server.use '/static', express.compress()
+
+      @server.use express.methodOverride()
 
 
   run: ->
@@ -64,4 +69,3 @@ class Manage extends EventEmitter
 if (!module.parent)
   manage = Manage.getInstance();
   manage.run()
-  
