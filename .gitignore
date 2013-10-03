@@ -18,3 +18,5 @@ npm-debug.log
 *.js
 
 node_modules
+static/cloud/root/*
+static/cloud/tmp/*
