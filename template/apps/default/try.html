@@ -1,1 +1,88 @@
 {% extends 'layout/default.html' %}
+{% block content %}
+<div class="i-cloud">
+    <div class="try">
+        <div class="content" id="content">
+            <div class="action">
+                <form action="{{action}}#content" method="get">
+                    <select name="file">
+                        {% for f in files%}
+                        <option value="{{f}}"
+                        {% if f == file %} selected="selected" {% endif %}>{{f}}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="ui mini labeled icon button secondary" type="submit">
+                        <i class="cloud download icon"></i>
+                        加载
+                    </button>
+                </form>
+
+            </div>
+            <div class="ui two column grid" id="J-editor-area" style="visibility: hidden">
+                <div class="column">
+                    <div id="J-ace-editor" class="editor">{{content}}</div>
+                </div>
+                <div class="column">
+                    <div id="J-ace-viewer" class="editor"></div>
+                </div>
+            </div>
+            <div>
+                <button class="fluid positive ui button icon" type="submit" id="J-upload">
+                    <i class="cloud upload icon" id="J-button-icon"></i>
+                    Peaches
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block script%}
+<script src="{{settings.STATIC_CDN_URL}}static/js/ace/9.11.2013/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    seajs.use(['$'], function ($) {
+        $('#J-editor-area').css({
+            visibility: 'visible'
+        })
+        var editor = ace.edit("J-ace-editor");
+        editor.setTheme("ace/theme/github");
+
+        editor.getSession().setMode("ace/mode/css");
+        editor.getSession().setUseWorker(false);
+
+        var viewer = ace.edit("J-ace-viewer");
+        viewer.setTheme("ace/theme/github");
+        viewer.setReadOnly(true);
+        viewer.getSession().setMode("ace/mode/css");
+        viewer.getSession().setUseWorker(false);
+
+        var defaultIcon = $('#J-button-icon').attr('class');
+        $("#J-upload").click(function () {
+            $('#J-button-icon').attr('class','loading icon');
+            $.ajax({
+                type: "POST",
+                url: "/api/",
+                data: {
+                    styleText: editor.getValue(),
+                    beautify: true
+                },
+                success: function (data, textStatus, jqXHR) {
+                    if(data.stat == 'ok'){
+                        viewer.setValue(data.styleText)
+                    }
+                    else{
+                        if(data.errors){
+                            viewer.setValue(data.errors.join('|'))
+                        }
+                        else{
+                            viewer.setValue('加载失败，请重试')
+                        }
+                    }
+                    $('#J-button-icon').attr('class',defaultIcon);
+                }
+            })
+        });
+    });
+
+</script>
+{% endblock %}

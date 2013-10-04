@@ -1,3 +1,8 @@
+/**
+* 这是一个使用 Peaches 书写样式的例子，现在就点击下面的“Peaches”按钮试试
+* 你也可以从上面的列表中加载其他的样式表
+* 当然，也可以在这里输入你自己的样式
+*/
 p {
     background: url('https://i.alipayobjects.com/e/201301/25DFxqiuiC.png');
 }

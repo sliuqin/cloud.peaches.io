@@ -4,6 +4,13 @@ path = require 'path'
 exports.install = (app) ->
   testDir = path.join app.settings.PROJ_ROOT, 'static/test'
   app.get '/', (req, res, next)->
+      next()
+  , (req, res, next)->
+      next()
+  , (req, res, next)->
+    res.render 'apps/default/index.html'
+
+  app.get '/try', (req, res, next)->
     res.locals.action = "http://#{req.headers.host}#{req.headers.uri}"
     fs.readdir testDir, (err, files)->
       res.locals.files = files
@@ -16,4 +23,4 @@ exports.install = (app) ->
       next()
 
   , (req, res, next)->
-    res.render 'apps/default/index.html'
+    res.render 'apps/default/try.html'
