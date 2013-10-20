@@ -43,7 +43,8 @@
         "walk": "",
         "formage": "",
         "colorful": "",
-        "robotskirt": "2.7.1"
+        "robotskirt": "2.7.1",
+        "underscore":""
     },
     "devDependencies": {
         "grunt": "~0.4.1",

@@ -3,7 +3,7 @@ EventEmitter = require('events').EventEmitter;
 express = require('express');
 swig = require('swig');
 cons = require('consolidate');
-
+_ = require('underscore');
 
 class Manage extends EventEmitter
   @instance: null
