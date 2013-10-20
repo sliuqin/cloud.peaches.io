@@ -21,6 +21,9 @@ class Manage extends EventEmitter
       root: path.join(__dirname, 'logs')
     })
     @settings = require('./settings')
+    if process.env.NODE_ENV == 'production'
+      production_settings = require('./settings_prodcut')
+      @settings = _.extend @settings, production_settings
     @server = express()
 
     @server.configure 'all', =>
